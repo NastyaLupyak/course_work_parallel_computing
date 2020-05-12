@@ -50,16 +50,27 @@ class NewProcess(Process):
                 self.process_dictionary[i] += [(doc_name, index)]
             index += 1
 
+def calculate_index(files, N):
+    
+    size = int(len(files) / N)
+    list_index = []
+    for x in range(N):
+        list_index.append(x*size)
+    list_index.append(None)
+
+    return list_index
 
 if __name__ == '__main__':
 
     folder = 'C:/Users/lupya/Desktop/test/'
     files = os.listdir(folder)
-    num_of_processes = 1
+    N = 1
     processes = []
+    list_index = calculate_index(files, N)
 
-    for i in range(num_of_processes):
-        p = NewProcess(folder, files)
+    for i in range(N):
+        p = NewProcess(folder, files[list_index[i]:list_index[i+1]])
+
         processes.append(p)
 
     for process in processes:
