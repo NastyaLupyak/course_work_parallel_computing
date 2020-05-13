@@ -72,6 +72,14 @@ if __name__ == '__main__':
         p = NewProcess(folder, files[list_index[i]:list_index[i+1]])
 
         processes.append(p)
-
+    inv_index = []
     for process in processes:
-        process.start()
+        inv_index.append(process.run())
+
+    main_dict = inv_index[-1]
+    for el in inv_index[0:]:
+        for key in el.keys():
+            if key in main_dict.keys():
+                main_dict[key] += el[key]
+            else:
+                main_dict[key] = el[key]
