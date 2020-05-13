@@ -68,6 +68,8 @@ if __name__ == '__main__':
     processes = []
     list_index = calculate_index(files, N)
 
+    start_time = time()
+
     for i in range(N):
         p = NewProcess(folder, files[list_index[i]:list_index[i+1]])
 
@@ -76,10 +78,14 @@ if __name__ == '__main__':
     for process in processes:
         inv_index.append(process.run())
 
-    main_dict = inv_index[-1]
-    for el in inv_index[0:]:
+    main_dict = inv_index[0]
+    for el in inv_index[1:]:
         for key in el.keys():
             if key in main_dict.keys():
                 main_dict[key] += el[key]
             else:
                 main_dict[key] = el[key]
+
+    print(f'Time of work: {time() - start_time}')
+    with open('result.txt', 'a') as file:
+        file.write(str(main_dict))
