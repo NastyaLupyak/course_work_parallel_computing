@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+
 from multiprocessing import Process
 import os
 from time import time
@@ -50,28 +49,30 @@ class NewProcess(Process):
                 self.process_dictionary[i] += [(doc_name, index)]
             index += 1
 
+
 def calculate_index(files, N):
-    
+
     size = int(len(files) / N)
     list_index = []
     for x in range(N):
-        list_index.append(x*size)
+        list_index.append(x * size)
     list_index.append(None)
 
     return list_index
+
 
 if __name__ == '__main__':
 
     folder = 'C:/Users/lupya/Desktop/test/'
     files = os.listdir(folder)
-    N = 1
+    N = int(input('input number of processes:'))
     processes = []
     list_index = calculate_index(files, N)
 
     start_time = time()
 
     for i in range(N):
-        p = NewProcess(folder, files[list_index[i]:list_index[i+1]])
+        p = NewProcess(folder, files[list_index[i]:list_index[i + 1]])
 
         processes.append(p)
     inv_index = []
@@ -85,7 +86,7 @@ if __name__ == '__main__':
                 main_dict[key] += el[key]
             else:
                 main_dict[key] = el[key]
-
+                
     print(f'Time of work: {time() - start_time}')
     with open('result.txt', 'a') as file:
         file.write(str(main_dict))
